@@ -1,0 +1,154 @@
+/* Base styles */
+body {
+    font-family: Verdana, Geneva, sans-serif;
+    margin: 0;
+    padding: 8px;
+    background-color: #f6f6ef;
+}
+
+/* Header styles */
+.header {
+    background-color: #ff6600;
+    padding: 2px;
+    margin-bottom: 8px;
+}
+
+.header a {
+    color: #000;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.content {
+    padding: 0 10px;
+}
+
+/* Story styles */
+.story {
+    margin-bottom: 5px;
+}
+
+.story-title {
+    color: #000;
+    text-decoration: none;
+}
+
+.story-meta, 
+.comment-meta {
+    color: #828282;
+    font-size: 0.8em;
+}
+
+/* Comment styles */
+.comment {
+    margin: 10px 0;
+}
+
+.comment-text {
+    margin: 5px 0;
+}
+
+.comment-replies {
+    margin-left: 40px;
+}
+
+.comment-hidden {
+    color: #828282;
+    font-style: italic;
+}
+
+/* Tag styles */
+.tag {
+    background-color: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    margin-right: 5px;
+    text-decoration: none;
+    color: #666;
+}
+
+/* Form styles */
+.search-form {
+    margin: 10px 0;
+}
+
+.sort-options {
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+
+.error {
+    color: red;
+    margin: 10px 0;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    max-width: 500px;
+    padding: 5px;
+}
+
+/* Button styles */
+.button {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #ff7722;
+}
+
+/* Vote link styles */
+.vote-link {
+    text-decoration: none;
+    color: #828282;
+    margin-right: 5px;
+}
+
+/* Pagination styles */
+.pagination {
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: #000;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+/* Reply form styles */
+.reply-form {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+/* Search results styles */
+.search-results h2 {
+    margin-bottom: 20px;
+}
+
+.sort-options a {
+    color: #666;
+    text-decoration: none;
+}
+
+.sort-options a.active {
+    color: #ff6600;
+    font-weight: bold;
+}

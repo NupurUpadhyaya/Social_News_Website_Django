@@ -1,0 +1,27 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+    <div class="submit-story">
+        <h2>Submit a Story</h2>
+        <form method="post" class="story-form">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="help-text">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="error">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="button">Submit Story</button>
+        </form>
+    </div>
+{% endblock %}

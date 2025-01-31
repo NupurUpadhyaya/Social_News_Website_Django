@@ -1,0 +1,38 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+    <div class="search-results">
+        <h2>Search Results{% if query %} for "{{ query }}"{% endif %}</h2>
+        
+        <div class="sort-options">
+            Sort by: 
+            <a href="?q={{ query }}&sort=-score" {% if sort == '-score' %}class="active"{% endif %}>Highest Score</a> |
+            <a href="?q={{ query }}&sort=score" {% if sort == 'score' %}class="active"{% endif %}>Lowest Score</a> |
+            <a href="?q={{ query }}&sort=-date" {% if sort == '-date' %}class="active"{% endif %}>Newest</a> |
+            <a href="?q={{ query }}&sort=date" {% if sort == 'date' %}class="active"{% endif %}>Oldest</a>
+        </div>
+
+        {% for story in stories %}
+            <div class="story">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'vote' 'story' story.pk %}" class="vote-link">▲</a>
+                {% endif %}
+                <a href="{% if story.url %}{{ story.url }}{% else %}{% url 'story_detail' story.pk %}{% endif %}" class="story-title">
+                    {{ story.title }}
+                </a>
+                <div class="story-meta">
+                    {{ story.score }} points by {{ story.author.username }} 
+                    {{ story.created_at|timesince }} ago | 
+                    <a href="{% url 'story_detail' story.pk %}">
+                        {{ story.comments.count }} comment{{ story.comments.count|pluralize }}
+                    </a>
+                    {% for tag in story.tags.all %}
+                        <a href="{% url 'home' %}?tag={{ tag.name }}" class="tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No results found.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

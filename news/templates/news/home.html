@@ -1,0 +1,43 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+    {% for story in stories %}
+        <div class="story">
+            {% if user.is_authenticated %}
+                <a href="{% url 'vote' 'story' story.pk %}" class="vote-link {% if user in story.upvoted_by.all %}upvoted{% endif %}">▲</a>
+            {% endif %}
+            <div class="story-content">
+                <a href="{% url 'story_detail' story.pk %}" class="story-title">{{ story.title }}</a>
+                {% if story.url %}
+                    <span class="story-url">(<a href="{{ story.url }}" target="_blank">{{ story.url|urlizetrunc:30 }}</a>)</span>
+                {% endif %}
+                <div class="story-meta">
+                    {{ story.score }} point{{ story.score|pluralize }} by {{ story.author.username }} 
+                    {{ story.created_at|timesince }} ago | 
+                    <a href="{% url 'story_detail' story.pk %}">
+                        {{ story.comments.count }} comment{{ story.comments.count|pluralize }}
+                    </a>
+                    {% for tag in story.tags.all %}
+                        <a href="{% url 'home' %}?tag={{ tag.name }}" class="tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No stories found.</p>
+    {% endfor %}
+
+    {% if stories.has_other_pages %}
+        <div class="pagination">
+            {% if stories.has_previous %}
+                <a href="?page={{ stories.previous_page_number }}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}">Previous</a>
+            {% endif %}
+            
+            <span>Page {{ stories.number }} of {{ stories.paginator.num_pages }}</span>
+            
+            {% if stories.has_next %}
+                <a href="?page={{ stories.next_page_number }}{% if request.GET.tag %}&tag={{ request.GET.tag }}{% endif %}">Next</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

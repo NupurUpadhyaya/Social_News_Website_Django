@@ -1,0 +1,39 @@
+{% load static %}
+
+<div class="comment" id="comment-{{ comment.id }}">
+    <div class="comment-meta">
+        {% if user.is_authenticated %}
+            <a href="{% url 'vote' 'comment' comment.pk %}" class="vote-link {% if user in comment.upvoted_by.all %}upvoted{% endif %}">▲</a>
+        {% endif %}
+        <span class="score">{{ comment.score }} point{{ comment.score|pluralize }}</span> by {{ comment.author.username }} 
+        {{ comment.created_at|timesince }} ago
+    </div>
+    
+    <div class="comment-content" id="comment-content-{{ comment.id }}">
+        <div class="comment-text">
+            {{ comment.text|linebreaks }}
+        </div>
+        
+        {% if user.is_authenticated %}
+            <div class="comment-actions">
+                <a href="#reply-form-{{ comment.id }}" class="reply-link" onclick="toggleReplyForm('{{ comment.id }}')">reply</a>
+            </div>
+            
+            <div class="reply-form" id="reply-form-{{ comment.id }}" style="display: none;">
+                <form method="post" action="{% url 'reply_comment' comment.id %}">
+                    {% csrf_token %}
+                    <textarea name="text" rows="4" required></textarea>
+                    <button type="submit" class="button">Reply</button>
+                </form>
+            </div>
+        {% endif %}
+        
+        {% if comment.replies.exists %}
+            <div class="comment-replies">
+                {% for reply in comment.replies.all %}
+                    {% include "news/comment.html" with comment=reply %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
